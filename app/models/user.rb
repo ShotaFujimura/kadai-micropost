@@ -6,10 +6,16 @@ class User < ApplicationRecord
     has_secure_password
     
     has_many :microposts
+    
     has_many :relationships
     has_many :followings, through: :relationships, source: :follow
-    has_many :reverses_of_rlationship, class_name: 'Relationship', foreign_key: 'follow_id'
-    has_many :followers, through: :reverses_of_rlationship, source: :user
+    has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'follow_id'
+    has_many :followers, through: :reverses_of_relationship, source: :user
+
+
+    has_many :favorites
+    has_many :favmicroposts, through: :favorites, source: :micropost
+   
     
     def follow(other_user)
         unless self==other_user
@@ -29,5 +35,7 @@ class User < ApplicationRecord
     def feed_microposts
         Micropost.where(user_id: self.following_ids + [self.id])
     end 
+    
+    
     
 end

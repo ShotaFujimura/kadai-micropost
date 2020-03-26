@@ -1,0 +1,15 @@
+<h1>Likeした投稿</h1>
+
+<% current_user.favmicroposts.each do |favpost| %>
+    <li class="media mb-3">
+      <img class="mr-2 rounded" src="<%= gravatar_url(favpost.user, { size: 50 }) %>" alt="">
+      <div class="media-body">
+        <div>
+          <%= link_to favpost.user.name, user_path(favpost.user) %> <span class="text-muted">posted at <%= favpost.created_at %></span>
+        </div>
+        <div>
+          <p><%= favpost.content %></p>
+        </div>
+      </div>
+    </li>
+<% end %>
